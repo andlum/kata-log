@@ -1,5 +1,5 @@
 ORG_CHART = {
-  "joe": {
+  "emily": {
     "brad": {
       "nick": {
         "jordan": undefined,
@@ -30,7 +30,7 @@ ORG_CHART = {
 }
 
 const findEmployee = (name) => {
-  const { role, direct, total } = search(name, null, ORG_CHART);
+  const { role, direct, total } = directorySearch(name, null, ORG_CHART);
 
   return `${role}, ${direct}, ${total}`
 }
@@ -48,7 +48,7 @@ const countReports = (chart) => {
   return total;
 }
 
-const search = (target, current, chart) => {
+const directorySearch = (target, current, chart) => {
   if (target === current) {
     if (chart !== undefined) {
       const direct = Object.keys(chart).length;
@@ -86,11 +86,11 @@ const tests = [
     expected: "ic, 0, 0"
   },
   {
-    find: "camilla",
+    find: "camille",
     expected: "manager, 2, 6"
   },
   {
-    find: "radford",
+    find: "brad",
     expected: "manager, 2, 9"
   },
 ]
