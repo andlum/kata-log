@@ -15,12 +15,21 @@ const mockFetch = async (url) => {
 };
 
 const fetchAll = async (urls) => {
-  const requests = urls.map(url => mockFetch(url));
+  const errors = [];
+  const requests = urls.map((url) =>
+    mockFetch(url).catch((e) => errors.push(e))
+  );
+
   const responses = await Promise.all(requests);
 
-  const result = await responses.reduce((acc, response) => { return { ...acc, ...response} }, {})
+  const result = await responses.reduce((acc, response) => {
+    return { ...acc, ...response };
+  }, {});
 
-  return result
+  return { result, errors };
 };
 
-fetchAll(urls).then(result => console.log(result));
+fetchAll(urls).then(({ result, errors }) => {
+  console.log(result);
+  console.log(errors);
+});
